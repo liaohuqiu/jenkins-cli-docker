@@ -5,4 +5,12 @@ RUN keytool -importcert -alias local-CA \
         -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts \
         -file /tmp/lets-encrypt.der \
         -storepass changeit
-ADD jenkins-cli.jar /opt/src/
+
+WORKDIR /opt/src
+
+COPY jenkins-cli.jar /opt/src/
+COPY jenkins-cli /bin/jenkins-cli
+
+ENV JENKINS_URL ""
+ENV PRIVATE_KEY "/ssh/id_rsa"
+VOLUME /ssh
